@@ -1,6 +1,10 @@
-# Testing
+# Testing 
 
-sub-tests.
+This document contains a few tips and tricks for tests in Go.
+
+# Running sub-tests.
+
+This is example shows how to run sub-tests in table driven tests.
 
 ```
 func TestSub(t *testing.T) {
@@ -32,14 +36,18 @@ func TestSub(t *testing.T) {
 }
 ```
 
-# Testing (black-box testing) - avoid circular dependencies.
-Only access public func.
+# Black-box testing 
+
+Black-box testing can be used to test only public functions exposed from a package. It can also be used to avoid circular dependencies in tests.
+
 ```
 // foo_test.go
 package foo_test
 ```
 
-- get rid of mock messages?
+# Verbosity of tests
+
+It is possible to add extra test output depending on whether the test is run with the verbose option or not. It is also possible to silence logging.
 
 ```
 func TestVerbose(t *testing.T) {
@@ -53,6 +61,9 @@ func TestVerbose(t *testing.T) {
 ```
 
 # Test in parallel 
+
+It is possible to run tests in parallel by adding ```t.Parallel()```. For example:
+
 ```
 func Test_Parallel(t *testing.T) {
 	t.Parallel()
@@ -61,11 +72,23 @@ func Test_Parallel(t *testing.T) {
 ```
 
 # Race detector
- -race!
+ 
+ The race detector is a useful tool for finding race conditions. NEVER QUESTION THE RACE DETECTOR!
+
+ Tests can be ran with the race detector using the option ```-race```.
+
+ ```
+ go test -v -race ./... 
+ ```
+
+Race detector can also be used when running applications. 
 
 # Example tests
+
+Tests can be documented in the following manner:
+
  ```
- // This is some text from your example.
+// This is some text from your example.
 // You can add additional information about your example here.
 func ExampleDuplicate() {
 	d := src.Duplicate("foo")
